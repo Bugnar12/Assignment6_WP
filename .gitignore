@@ -1,0 +1,4 @@
+php/.env
+*.mdf
+*.ldf
+*.lck
