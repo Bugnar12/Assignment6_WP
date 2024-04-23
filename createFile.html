@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create File</title>
+    <link rel="stylesheet" type="text/css" href="createFile.css">
+</head>
+<body>
+<div class="container">
+    <h1>Create File</h1>
+    <p><b>Please fill this form and submit to add the file to the database.</b></p>
+    <form id="createForm" action="javascript/index.js" method="post">
+        <input type="text" id="title" name="title" placeholder="Title" required> <br>
+        <input type="text" id="format_type" name="format_type" placeholder="Format Type" required> <br>
+        <input type="text" id="genre" name="genre" placeholder="Genre" required> <br>
+        <input type="text" id="path" name="path" placeholder="Path" required> <br>
+        <div class="button_container">
+            <button type="submit">Create File</button>
+            <button type="reset" onclick="window.location.href='index.html'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script src="javascript/shared.js"></script>
+<script src="javascript/ajax.js"></script>
+<script src="javascript/create.js"></script>
+</body>
+</html>

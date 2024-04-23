@@ -1,4 +1,5 @@
 <?php
+    include($_SERVER["DOCUMENT_ROOT"] . "/Assignment6_WP/php/cors.php");
     $env = parse_ini_file('.env');
 
     $host = $env["DB_HOST"];
@@ -8,13 +9,6 @@
 
     try{
         $conn = mysqli_connect($host, $user, $password, $database);
-        //try to print the whole content of the row with id = 2
-        $sql = "SELECT * FROM File WHERE id = 2";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        echo "id: " . $row["id"] . "<br>";
-        echo "title: " . $row["title"] . "<br>";
-
     }
     catch(Exception $e){
         echo "Connection failed: " . $e->getMessage();
