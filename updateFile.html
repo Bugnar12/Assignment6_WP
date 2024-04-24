@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update File</title>
+
+</head>
+<body>
+<div class="container">
+    <h1>Update File</h1>
+    <p><b>Please fill this form and submit to update the file in the database.</b></p>
+    <form id="updateForm" action="javascript/update.js" method="post">
+        <input type="hidden" id="updateId" name="id">
+        <input type="text" id="updateTitle" name="title" placeholder="Title" required> <br>
+        <input type="text" id="updateFormatType" name="format_type" placeholder="Format Type" required> <br>
+        <input type="text" id="updateGenre" name="genre" placeholder="Genre" required> <br>
+        <input type="text" id="updatePath" name="path" placeholder="Path" required> <br>
+        <div class="button_container">
+            <button type="submit">Update File</button>
+            <button type="reset" onclick="window.location.href='index.html'">Cancel</button>
+        </div>
+    </form>
+</div>
+<script src="javascript/validation.js"></script>
+<script src="javascript/shared.js"></script>
+<script src="javascript/ajax.js"></script>
+<script src="javascript/update.js"></script>
+<script>
+    window.addEventListener('load', function() {
+        const updateItem = JSON.parse(localStorage.getItem('updateItem'));
+        document.getElementById('updateId').value = updateItem.id;
+        document.getElementById('updateTitle').value = updateItem.title;
+        document.getElementById('updateFormatType').value = updateItem.format_type;
+        document.getElementById('updateGenre').value = updateItem.genre;
+        document.getElementById('updatePath').value = updateItem.path;
+});
+</script>
+</body>
+</html>

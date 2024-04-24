@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Read Files</title>
+    <link rel="stylesheet" type="text/css" href="css/index-style.css">
+    <link rel="stylesheet" type="text/css" href="css/genreFilter-style.css">
+    <script src="javascript/ajax.js"></script>
+</head>
+<body>
+<div id="files"></div>
+<div>
+    <input type="text" id="genreFilter" placeholder="Enter genre">
+    <button id="submitGenre">Submit Genre</button>
+</div>
+<div>
+    <input type="text" id="formatTypeFilter" placeholder="Enter format type">
+    <button id="submitFormatType">Submit Format Type</button>
+</div>
+<div>
+    <ul id="fileList"></ul>
+</div>
+<script>
+    function displayFiles(files) {
+        const filesDiv = document.getElementById('files');
+        filesDiv.innerHTML = '';
+        files.forEach(function(file) {
+            const fileDiv = document.createElement('div');
+
+            const title = document.createElement('p');
+            title.textContent = 'Title: ' + file.title;
+            fileDiv.appendChild(title);
+
+            const formatType = document.createElement('p');
+            formatType.textContent = 'Format Type: ' + file.format_type;
+            fileDiv.appendChild(formatType);
+
+            const genre = document.createElement('p');
+            genre.textContent = 'Genre: ' + file.genre;
+            fileDiv.appendChild(genre);
+
+            const path = document.createElement('p');
+            path.textContent = 'Path: ' + file.path;
+            fileDiv.appendChild(path);
+
+            const updateButton = document.createElement('button');
+            updateButton.textContent = 'Update';
+            updateButton.addEventListener('click', function () {
+                localStorage.setItem('updateItem', JSON.stringify(file));
+                window.location.href = 'updateFile.html';
+            });
+            fileDiv.appendChild(updateButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                const isConfirmed = window.confirm('Are you sure you want to delete this file?');
+                if (isConfirmed) {
+                    createRequest('php/crud/delete.php', 'DELETE', {id: file.id}, function (response) {
+                        console.log(response);
+                        window.location.reload();
+                    }, function (request) {
+                        console.error('Error:', request.status, request.statusText);
+                    });
+                }
+            });
+            fileDiv.appendChild(deleteButton);
+
+            filesDiv.appendChild(fileDiv);
+        });
+    }
+
+    function displayFilteredFiles(files) {
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = ''; // Clear the list
+        if (files.length === 0) {
+            fileList.textContent = 'No titles match the selected genre or format type.';
+        } else {
+            files.forEach(function(file) {
+                const fileItem = document.createElement('li');
+                fileItem.textContent = 'Title: ' + file;
+                fileItem.className = 'file-title';
+                fileList.appendChild(fileItem);
+            });
+        }
+    }
+
+    window.addEventListener('load', function() {
+        createRequest('php/crud/read.php', 'GET', null, displayFiles, function (request) {
+            console.error('Error:', request.status, request.statusText);
+        });
+
+        document.getElementById('submitGenre').addEventListener('click', function() {
+            const genre = document.getElementById('genreFilter').value;
+            if (genre) {
+                createPostRequestWithJson('php/filter/getAllFilesByGenre.php', { genre: genre }, displayFilteredFiles, function(request) {
+                    console.error('Error:', request.status, request.statusText);
+                });
+            } else {
+                    alert('Please enter a genre');
+            }
+        });
+
+        document.getElementById('submitFormatType').addEventListener('click', function() {
+            const formatType = document.getElementById('formatTypeFilter').value;
+            if (formatType) {
+                createPostRequestWithJson('php/filter/getAllFilesByFormatType.php', { format_type: formatType }, displayFilteredFiles, function(request) {
+                    console.error('Error:', request.status, request.statusText);
+                });
+            } else {
+                createRequest('php/crud/read.php', 'GET', null, displayFiles, function (request) {
+                    console.error('Error:', request.status, request.statusText);
+                });
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -3,20 +3,20 @@
     header('Content-Type: application/json');
 
     if($_SERVER["REQUEST_METHOD"] != "PUT"){
-        header("HTTP 1.1/ 405 Method not allowed");
+        echo json_encode(array("error" => "Invalid request method"));
         http_response_code(405);
         die();
     }
 
-    parse_str(file_get_contents("php://input"),$_PUT);
+    $data = json_decode(file_get_contents('php://input'), true);
 
-    if(isset($_PUT['id']) && !empty(trim($_PUT['id'])))
+    if(isset($data['id']) && !empty(trim($data['id'])))
     {
-        $id = $_PUT['id'];
-        $title = $_PUT['title'];
-        $format_type = $_PUT['format_type'];
-        $genre = $_PUT['genre'];
-        $path = $_PUT['path'];
+        $id = $data['id'];
+        $title = $data['title'];
+        $format_type = $data['format_type'];
+        $genre = $data['genre'];
+        $path = $data['path'];
 
         $stmt = $conn->prepare("UPDATE File SET title = ?, format_type = ?, genre = ?, path = ? WHERE id = ?");
         $stmt->bind_param("ssssi", $title, $format_type, $genre, $path, $id);
@@ -28,6 +28,8 @@
         }
 
         $stmt->close();
+    } else {
+        echo json_encode(array("error" => "Missing or empty 'id' parameter"));
     }
     $conn->close();
 ?>

@@ -1,3 +1,4 @@
+/*
 // index.js
 document.getElementById('createForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -64,4 +65,4 @@ function refreshFiles() {
 
 window.addEventListener('load', function() {
     refreshFiles();
-});
+});*/

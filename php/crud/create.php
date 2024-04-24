@@ -9,16 +9,21 @@
         die();
     }
 
-    // Check if the $_POST variables are set
-    if(isset($_POST['title']) &&
-       isset($_POST['format_type']) &&
-       isset($_POST['genre']) &&
-       isset($_POST['path']))
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    //log the json version of the data
+
+    // Check if the data variables are set
+    if(isset($data['title']) &&
+       isset($data['format_type']) &&
+       isset($data['genre']) &&
+       isset($data['path']))
     {
-        $title = $_POST['title'];
-        $format_type = $_POST['format_type'];
-        $genre = $_POST['genre'];
-        $path = $_POST['path'];
+    //below log any json so that I see it passes the if
+        $title = $data['title'];
+        $format_type = $data['format_type'];
+        $genre = $data['genre'];
+        $path = $data['path'];
 
         // Prepare the SQL statement
         $stmt = $conn->prepare("INSERT INTO file (title, format_type, genre, path) VALUES (?, ?, ?, ?)");
@@ -41,7 +46,7 @@
         // Close the statement
         $stmt->close();
     } else {
-        error_log(var_export($_POST, true));
+        error_log(var_export($data, true));
         echo json_encode(array("error" => "Not all required POST parameters were provided."));
     }
 

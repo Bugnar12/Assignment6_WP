@@ -3,16 +3,16 @@
     header('Content-Type: application/json');
 
     if($_SERVER["REQUEST_METHOD"] != "DELETE"){
-        header("HTTP 1.1/ 405 Method not allowed");
+        echo json_encode(array("error" => "Invalid request method"));
         http_response_code(405);
         die();
     }
 
-    parse_str(file_get_contents("php://input"),$_DELETE);
+    $data = json_decode(file_get_contents('php://input'), true);
 
-    if(isset($_DELETE['id']) && !empty(trim($_DELETE['id'])))
+    if(isset($data['id']) && !empty(trim($data['id'])))
     {
-        $id = $_DELETE['id'];
+        $id = $data['id'];
         $stmt = $conn->prepare("DELETE FROM File WHERE id = ?");
         $stmt->bind_param("i", $id);
 
@@ -27,6 +27,8 @@
         }
 
         $stmt->close();
+    } else {
+        echo json_encode(array("error" => "Missing or empty 'id' parameter"));
     }
     $conn->close();
 ?>

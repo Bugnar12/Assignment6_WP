@@ -1,0 +1,22 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete File</title>
+</head>
+<body>
+<div class="container">
+    <h1>Delete File</h1>
+    <p><b>Please fill this form and submit to delete the file from the database.</b></p>
+    <form id="deleteForm" action="javascript/delete.js" method="post">
+        <input type="text" id="deleteId" name="id" placeholder="ID" required> <br>
+        <div class="button_container">
+            <button type="submit">Delete File</button>
+
+        </div>
+    </form>
+</div>
+<script src="javascript/shared.js"></script>
+<script src="javascript/ajax.js"></script>
+<script src="javascript/delete.js"></script>
+</body>
+</html>

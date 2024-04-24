@@ -2,44 +2,13 @@
 <html>
 <head>
     <title>CRUD Operations</title>
+    <link rel="stylesheet" type="text/css" href="css/index-style.css">
 </head>
 <body>
 <h1>CRUD Operations</h1>
 
-<!-- Create Operation -->
-<h2>Create File</h2>
-<form id="createForm">
-    <input type="text" id="title" name="title" placeholder="Title" required>
-    <input type="text" id="format_type" name="format_type" placeholder="Format Type" required>
-    <input type="text" id="genre" name="genre" placeholder="Genre" required>
-    <input type="text" id="path" name="path" placeholder="Path" required>
-    <button type="submit">Create</button>
-</form>
+<p><a href="createFile.html">Create File</a></p>
+<p><a href="readFile.html">Read Files</a></p>
 
-<!-- Read Operation -->
-<h2>Files</h2>
-<div id="files"></div>
-
-<!-- Update Operation -->
-<h2>Update File</h2>
-<form id="updateForm">
-    <input type="text" id="updateId" name="id" placeholder="ID">
-    <input type="text" id="updateTitle" name="title" placeholder="Title">
-    <input type="text" id="updateFormatType" name="format_type" placeholder="Format Type">
-    <input type="text" id="updateGenre" name="genre" placeholder="Genre">
-    <input type="text" id="updatePath" name="path" placeholder="Path">
-    <button type="submit">Update</button>
-</form>
-
-<!-- Delete Operation -->
-<h2>Delete File</h2>
-<form id="deleteForm">
-    <input type="text" id="deleteId" name="id" placeholder="ID" required>
-    <button type="submit">Delete</button>
-</form>
-
-<script src="javascript/shared.js"></script>
-<script src="javascript/ajax.js"></script>
-<script src="javascript/index.js"></script>
 </body>
 </html>

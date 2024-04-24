@@ -1,0 +1,8 @@
+.file-title {
+    font-size: 20px;
+    color: dimgrey;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 350px;
+}
